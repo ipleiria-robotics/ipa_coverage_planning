@@ -496,7 +496,9 @@ void RoomSegmentationServer::execute_segmentation_server(const ipa_building_msgs
 		cv::Mat original_img_eroded, temp;
 		cv::erode(original_img, temp, cv::Mat(), cv::Point(-1, -1), 3);
 		cv::dilate(temp, original_img_eroded, cv::Mat(), cv::Point(-1, -1), 3);
-		original_img_eroded.convertTo(segmented_map, CV_32SC1, 256, 0);		// occupied space = 0, free space = 65280
+		//original_img_eroded.convertTo(segmented_map, CV_32SC1, 256, 0);		// occupied space = 0, free space = 65280
+		// Assume everything is labelled as 0 or as a room
+		original_img.convertTo(segmented_map, CV_32SC1, 1.0, 0.0);		// occupied space = 0, free space = 65280
 		int label_index = 1;
 
 //		cv::imshow("original_img", original_img_eroded);
